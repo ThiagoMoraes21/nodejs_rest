@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/ThiagoMoraes21/nodejs_rest#readme",
   "dependencies": {
+    "consign": "^0.1.6",
     "express": "^4.17.1"
   },
   "devDependencies": {

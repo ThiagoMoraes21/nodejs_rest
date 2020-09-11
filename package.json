@@ -1,0 +1,27 @@
+{
+  "name": "nodejs_rest",
+  "version": "1.0.0",
+  "description": "Node Rest API - design patterns",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThiagoMoraes21/nodejs_rest.git"
+  },
+  "keywords": [],
+  "author": "Thiago",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThiagoMoraes21/nodejs_rest/issues"
+  },
+  "homepage": "https://github.com/ThiagoMoraes21/nodejs_rest#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

@@ -1,8 +1,17 @@
 const customExpress = require('./config/customExpress');
 const PORT = process.env.PORT || 3000;
+const connection = require('./infrastructure/connection');
 
-const app = customExpress();
+connection.connect((err) => {
+    if (err)
+        console.log('DB Connection Error: ', err);
 
-app.listen(PORT, () => {
-    console.log(`Server is running at port: ${PORT}`);
+    console.log('DB Connected successfuly.');
+    
+    const app = customExpress();
+
+    app.listen(PORT, () => {
+        console.log(`Server is running at port: ${PORT}`);
+    });
 });
+

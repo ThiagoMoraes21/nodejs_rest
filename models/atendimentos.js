@@ -34,7 +34,7 @@ class Atendimento {
             if(error)
                 return res.status(400).json({ error });
 
-            res.status(201).json({ results });
+            res.status(201).json(atendimento);
         });
     }
 
@@ -45,7 +45,7 @@ class Atendimento {
             if(error)
                 return res.status(500).json({ error });
 
-            res.status(200).json({ response });
+            res.status(200).json(response);
         });
     }
 
@@ -74,7 +74,19 @@ class Atendimento {
             if(error)
                 return res.status(400).json({ error });
 
-            res.status(200).json({ response });
+            res.status(200).json({ ...values, id: formatedId });
+        });
+    }
+
+    delete(id, res) {
+        const sql = `DELETE FROM atendimentos WHERE id=?`;
+        const formatedId = parseInt(id);
+
+        connection.query(sql, [formatedId], (error, response) => {
+            if(error)
+                return res.status(400).json({ error });
+
+            res.status(200).json({ deleteId: formatedId });
         });
     }
 }

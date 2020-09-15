@@ -1,10 +1,11 @@
 class Tabelas {
     init(connection) {
         this.connection = connection;
-        this.criarAtendimentos(); 
+        this.createAtendimentos(); 
+        this.createPets();
     }
 
-    criarAtendimentos() {
+    createAtendimentos() {
         const sql = `
             CREATE TABLE IF NOT EXISTS Atendimentos (
                 id int NOT NULL AUTO_INCREMENT,
@@ -18,11 +19,29 @@ class Tabelas {
                 PRIMARY KEY(id)
             )`;
 
-        this.connection.query(sql, (err) => {
+        this.connection.query(sql, err => {
             if(err)
-                console.log('Error trying to create Tabelas: ', err);
+                console.log('Error trying to create table Atendimentos: ', err);
 
-            console.log('Table Atendimentos created successfuly.');
+            console.log('Table Atendimentos was created successfuly.');
+        });
+    }
+
+    createPets() {
+        const query = `
+            CREATE TABLE IF NOT EXISTS Pets (
+                id int NOT NULL AUTO_INCREMENT,
+                nome varchar(50),
+                imagem varchar(200),
+                PRIMARY KEY (id)
+            )
+        `;
+
+        this.connection.query(query, error => {
+            if(error) 
+                console.log('Error trying to create table Pets');
+
+            console.log('Table Pets was created successfuly.')
         });
     }
 }

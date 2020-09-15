@@ -3,8 +3,8 @@ const connection = require('../infrastructure/connection');
 
 class Atendimento {
     add(atendimento, res) {
-        const dataCriacao = moment().format('YYYY-MM-DD HH:MM:SS');
-        const data = moment(atendimento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS');
+        const dataCriacao = moment().format('YYYY-MM-DD HH:mm:ss');
+        const data = moment(atendimento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss');
         
         const validDate = moment(data).isSameOrAfter(dataCriacao);
         const validClientName = atendimento.cliente.length >= 5;

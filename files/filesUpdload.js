@@ -1,10 +1,9 @@
-const fs = require('fs');
-
 /* ***********************************************************************************
     Synchronous way of read and write files, it uses buffer
     which are not asynchronous, therefore, this can be blocking
     if the file beign readed is too large.
     
+    const fs = require('fs');
 
     fs.readFile('./assets/doguinho.jpg', (error, buffer) => {
         console.log(buffer);
@@ -15,10 +14,23 @@ const fs = require('fs');
     });
 * ***********************************************************************************/
 
+const fs = require('fs');
+const path = require('path');
 
-// Using Streams to read and write files in a asynchronous way
-fs.createReadStream('./assets/doguinho.jpg')
-    .pipe(fs.createWriteStream('./assets/doguinho-clone-2.jpg'))
-    .on('finish', () => {
-        console.log('Doguinho clone was written successfuly...')
-    });
+module.exports = (imagePath, fileName, callBackCreatedImage) => {
+    // Using Streams to read and write files in a asynchronous way
+    const validTypes = ['jpg', 'png', 'jpeg'];
+    const type = path.extname(imagePath);
+    const typeIsValid = validTypes.indexOf(type.substring(1)) !== -1;
+
+    if(!typeIsValid) {
+        const errorMessage = `Invalid image type: ${type}`;
+        return callBackCreatedImage(errorMessage, null)
+    }
+
+    const newPath = `./assets/images/${fileName}${type}`;
+
+    fs.createReadStream(imagePath)
+        .pipe(fs.createWriteStream(newPath))
+        .on('finish', () => callBackCreatedImage(null, newPath));
+}

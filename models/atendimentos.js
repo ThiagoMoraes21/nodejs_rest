@@ -1,6 +1,6 @@
 const axios = require('axios');
 const moment = require('moment');
-const connection = require('../infrastructure/connection');
+const connection = require('../infrastructure/database/connection');
 
 class Atendimento {
     add(atendimento, res) {

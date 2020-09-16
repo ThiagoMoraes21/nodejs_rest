@@ -1,7 +1,7 @@
 const customExpress = require('./config/customExpress');
 const PORT = process.env.PORT || 3000;
-const connection = require('./infrastructure/connection');
-const Tabelas = require('./infrastructure/tables');
+const connection = require('./infrastructure/database/connection');
+const Tabelas = require('./infrastructure/database/tables');
 
 connection.connect((err) => {
     if (err)

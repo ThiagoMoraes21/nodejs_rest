@@ -27,7 +27,9 @@ module.exports = app => {
         const { id } = req.params;
         const values = req.body;
 
-        Atendimento.update(id, values, res);
+        Atendimento.update(id, values)
+            .then(results => res.status(200).json(results))
+            .catch(errors => res.status(400).json({ errors }));
     });
 
     app.delete('/atendimentos/:id', (req, res) => {

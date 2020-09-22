@@ -16,6 +16,11 @@ class Atendimento {
         const sql = `SELECT * FROM atendimentos WHERE id=${formatedId}`;
         return query(sql);
     }
+
+    update(values) {
+        const sql = `UPDATE atendimentos SET ? WHERE id=?`;
+        return query(sql, values);
+    }
 }
 
 module.exports = new Atendimento();

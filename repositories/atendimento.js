@@ -21,6 +21,11 @@ class Atendimento {
         const sql = `UPDATE atendimentos SET ? WHERE id=?`;
         return query(sql, values);
     }
+
+    delete(id) {
+        const sql = `DELETE FROM atendimentos WHERE id=?`;
+        return query(sql, id);
+    }
 }
 
 module.exports = new Atendimento();

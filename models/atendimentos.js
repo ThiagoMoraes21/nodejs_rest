@@ -85,15 +85,11 @@ class Atendimento {
         });
     }
 
-    delete(id, res) {
-        const sql = `DELETE FROM atendimentos WHERE id=?`;
+    delete(id) {
         const formatedId = parseInt(id);
 
-        connection.query(sql, [formatedId], (error, response) => {
-            if(error)
-                return res.status(400).json({ error });
-
-            res.status(200).json({ deleteId: formatedId });
+        return repository.delete(formatedId).then(result => {
+            return { deletedId: formatedId }   
         });
     }
 }

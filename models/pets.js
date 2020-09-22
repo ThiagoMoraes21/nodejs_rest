@@ -1,23 +1,21 @@
 const connection = require('../infrastructure/database/connection');
 const filesUpdload = require('../infrastructure/files/filesUpdload');
+const repository = require('../repositories/pets');
 
 class Pets {
-    add(pet, res) {
-        const query = `INSERT INTO Pets SET ?`;
-
-        filesUpdload(pet.imagem, pet.nome, (errUpload, newPath) => {
-            if(errUpload)
-                return res.status(400).json({ error: errUpload})
-
-            const newPet = { nome: pet.nome, imagem: newPath }
-
-            connection.query(query, [newPet], (error, response) => {
-                if(error)
-                    return res.status(400).json({ error });
+    add(pet) {
+        return new Promise((resolve, reject) => {
+            filesUpdload(pet.imagem, pet.nome, (errUpload, newPath) => {
+                if(errUpload)
+                   return  reject({ error: errUpload });
     
-                res.status(201).json(newPet);
+                const newPet = { nome: pet.nome, imagem: newPath }
+    
+                return repository.add([newPet]).then(result => {
+                    resolve({ newPet }); 
+                });
             });
-        });
+        })
 
     }
 }

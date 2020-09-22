@@ -10,6 +10,12 @@ class Atendimento {
         const sql = `SELECT * FROM atendimentos`;
         return query(sql);
     }
+
+    searchById(id) {
+        const formatedId = parseInt(id);
+        const sql = `SELECT * FROM atendimentos WHERE id=${formatedId}`;
+        return query(sql);
+    }
 }
 
 module.exports = new Atendimento();

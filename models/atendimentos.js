@@ -58,15 +58,8 @@ class Atendimento {
         });
     }
 
-    list(res) {
-        const sql = `SELECT * FROM atendimentos`;
-
-        connection.query(sql, (error, response) => {
-            if(error)
-                return res.status(500).json({ error });
-
-            res.status(200).json(response);
-        });
+    list() {
+        return repository.list();
     }
 
     searchById(id, res) {

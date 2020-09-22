@@ -4,27 +4,46 @@ const connection = require('../infrastructure/database/connection');
 const repository = require('../repositories/atendimento');
 
 class Atendimento {
-    add(atendimento) {
-        const dataCriacao = moment().format('YYYY-MM-DD HH:mm:ss');
-        const data = moment(atendimento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss');
-        
-        const validDate = moment(data).isSameOrAfter(dataCriacao);
-        const validClientName = atendimento.cliente.length >= 5;
+    constructor() {
+        this.validDate = ({date, creationDate}) => {
+            moment(date).isSameOrAfter(creationDate);
+        } 
 
-        const validations = [
+        this.validClientName = size => size >= 5;
+          
+        this.validate = params => {
+            this.validations.filter(field => {
+                const { name } = field;
+                const param = params[name];
+
+                return !field.valid(param);
+            });
+        }
+
+        this.validations = [
             {
                 name: 'data',
-                valid: validDate,
+                valid: this.validDate,
                 message: 'Data deve ser maior ou igual a data atual.'
             },
             {
                 name: 'cliente',
-                valid: validClientName,
+                valid: this.validClientName,
                 message: 'Nome do cliente deve ter no mínimo 5 caracteres.'
             }
         ];
+    }
 
-        const errors = validations.filter(field => !field.valid);
+    add(atendimento) {
+        const dataCriacao = moment().format('YYYY-MM-DD HH:mm:ss');
+        const data = moment(atendimento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss');
+        
+        const params = {
+            data: { date, creationDate },
+            cliente: { size: atendimento.cliente.length }
+        }
+
+        const errors = this.validate(params);
         
         if(errors.length > 0) 
             return new Promise((resolve, reject) => {
